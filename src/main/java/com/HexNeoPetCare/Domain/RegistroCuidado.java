@@ -32,7 +32,9 @@ public class RegistroCuidado
 	
 	private Cuidado cuidado;
 	
-	private Date fecha;
+	private Date fechaRegistro;
+	private Date fechaRealizado;
+	private boolean status; 
 	
 	public Mascota getMascota() {
 		return mascota;
@@ -53,11 +55,24 @@ public class RegistroCuidado
 	public void setIdRegistroCuidado(Long idRegistroCuidado) {
 		this.idRegistroCuidado = idRegistroCuidado;
 	}
-	public Date getFecha() {
-		return fecha;
+	public Date getFechaRegistro() {
+		return fechaRegistro;
 	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
 	}
+	public Date getFechaRealizado() {
+		return fechaRealizado;
+	}
+	public void setFechaRealizado(Date fechaRealizado) {
+		this.fechaRealizado = fechaRealizado;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	
 	
 }

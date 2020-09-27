@@ -1,5 +1,6 @@
 package com.HexNeoPetCare.Ports.Primary;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +46,14 @@ public class RegistroCuidadoServicio
 		return h;
 	}
 	
-	//ACTUALIZAR REGISTRO CUIDADO
-	public void actualizarRegistroCuidado(RegistroCuidado registroCuidado) throws Exception
+	//ACTUALIZAR ESTADO DEL CUIDADO DE LA MASCOTA
+	public void actualizarEstadoRegistroCuidado(Long idRegistroCuidado) throws Exception
 	{
-		RegistroCuidado h = obtenerRegistroCuidado(registroCuidado.getIdRegistroCuidado());
-		
-		if ( registroCuidado.getFecha() != null ) h.setFecha(registroCuidado.getFecha());
-
-		RepositorioRegistroCuidado.save(h);
+		RegistroCuidado rc = obtenerRegistroCuidado(idRegistroCuidado);
+		if (rc.isStatus()) throw new Exception("Ya fue actualizado el estado del registro del cuidado de la mascota.");
+		rc.setStatus(true);
+		rc.setFechaRealizado(new Date());
+		RepositorioRegistroCuidado.save(rc);
 		return;
 	}
 	

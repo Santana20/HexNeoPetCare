@@ -52,6 +52,7 @@ public class VacunaMascotaServicio
 	public void actualizarEstadoVacunaMascota(Long idVacunaMascota) throws Exception
 	{
 		VacunaMascota vm = obtenerVacunaMascota(idVacunaMascota);
+		if (vm.isStatus()) throw new Exception("Ya fue actualizado el estado de la vacuna de la mascota.");
 		
 		vm.setStatus(true);
 		vm.setFechaVacunaRealizada(new Date());

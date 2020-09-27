@@ -30,6 +30,9 @@ public class MascotaServicio
 		
 		TipoMascota tm = servicioTipoMascota.obtenerTipoMascota(idtipomascota);
 		
+		if ( RepositorioMascota.encontrarMascotasporNombreYUsuario(u.getIdUsuario(), m.getNombre()).size() > 0)
+			throw new Exception("Una de sus mascotas ya tiene ese nombre.");
+		
 		m.setUsuario(u);
 		m.setTipomascota(tm);
 		RepositorioMascota.save(m);

@@ -15,5 +15,8 @@ public interface MascotaRepositorio extends JpaRepository<Mascota, Long>
 	
 	@Query( "Select m from Mascota m where m.usuario.idUsuario = :idUsuario" )
 	List<Mascota> obtenerMascotaporidUsuario(@Param("idUsuario") Long idUsuario);
+	
+	@Query("Select m from Mascota m where m.Nombre = :nombremascota and m.usuario.idUsuario = :idUsuario")
+	List<Mascota> encontrarMascotasporNombreYUsuario( @Param("idUsuario") Long idUsuario, @Param("nombremascota") String nombremascota );
 }
 
