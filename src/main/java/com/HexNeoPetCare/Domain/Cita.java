@@ -31,7 +31,6 @@ public class Cita
 	private Mascota mascota;
 	
 	private Date fecha;
-	private Date hora;
 	private Boolean estado;
 	
 	
@@ -47,12 +46,7 @@ public class Cita
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	public Date getHora() {
-		return hora;
-	}
-	public void setHora(Date hora) {
-		this.hora = hora;
-	}
+
 	public Boolean getEstado() {
 		return estado;
 	}

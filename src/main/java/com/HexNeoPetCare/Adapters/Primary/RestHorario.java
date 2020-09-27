@@ -30,7 +30,7 @@ public class RestHorario {
 	public void registrarHorario(@RequestBody Horario horario, @PathVariable (value="idVeterinario") Long idVeterinario) {
 		 try		 {
 			 horarioServicio.registrarHorario(horario, idVeterinario); 
-			 }
+		 			}
 		 
 	        catch (Exception e)		 {
 	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo registrar el horario.");

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.HexNeoPetCare.Converters.VacunaMascotaFromToVacunaMascotaDTOConverter;
+import com.HexNeoPetCare.DTOClass.VacunaMascotaDTO;
 import com.HexNeoPetCare.Domain.VacunaMascota;
 import com.HexNeoPetCare.Ports.Primary.VacunaMascotaServicio;
 
@@ -24,13 +26,18 @@ public class RestVacunaMascota
 	@Autowired
 	private VacunaMascotaServicio servicioVacunaMascota;
 	
+	private VacunaMascotaFromToVacunaMascotaDTOConverter converterVacunaMascota = new VacunaMascotaFromToVacunaMascotaDTOConverter();
+	
 	//REGISTRAR VACUNA DE UNA MASCOTA
-	@PostMapping("/vacunamascota/registrarVacunaMascota/{idMascota}/{idVacuna}")	
-	public void registrarVacunaMascota(@PathVariable(value = "idMascota") Long idMascota, 
-			@PathVariable(value = "idVacuna") Long idVacuna, @RequestBody VacunaMascota vm)
+	@PostMapping("/vacunamascota/registrarVacunaMascota/{idMascota}")	
+	public void registrarVacunaMascota(@PathVariable(value = "idMascota") Long idMascota, @RequestBody VacunaMascotaDTO requestvm)
 	{
+		VacunaMascota vm = null;
+		Long idVacuna = null;
 		try
         {
+			vm = converterVacunaMascota.convertToVacunaMascota(requestvm);
+			idVacuna = requestvm.getIdVacuna();
 			servicioVacunaMascota.registrarVacunaMascota(idMascota, idVacuna, vm);
         }
         catch (Exception e)

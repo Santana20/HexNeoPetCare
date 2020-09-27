@@ -50,7 +50,6 @@ public class CitaServicio
 		Cita c = obtenerCita(cita.getIdCita());
 		
 		if ( cita.getFecha() != null ) c.setFecha(cita.getFecha());
-		if ( cita.getHora() != null ) c.setHora(cita.getHora());
 		if ( cita.getEstado() != null ) c.setEstado(cita.getEstado());
 
 		if ( cita.getVeterinario() != null )
@@ -88,9 +87,9 @@ public class CitaServicio
 	}
 
 	//LISTAR CITAS POR VETERINARIO
-	public List<Cita> listarCitasporVeterinario(Long idMascota)
+	public List<Cita> listarCitasporVeterinario(Long idVeterinario)
 	{
-		return RepositorioCita.obtenerCitaporidMascota(idMascota);
+		return RepositorioCita.obtenerCitaporidVeterinario(idVeterinario);
 	}
 
 }
