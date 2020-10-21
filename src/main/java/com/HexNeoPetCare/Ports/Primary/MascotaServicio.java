@@ -87,6 +87,6 @@ public class MascotaServicio
 	//LISTAR MASCOTAS POR USUARIO
 	public List<Mascota> listarMascotasporUsuario(Long idUsuario)
 	{
-		return RepositorioMascota.obtenerMascotaporidUsuario(idUsuario);
+		return RepositorioMascota.obtenerMascotasporidUsuario(idUsuario);
 	}
 }

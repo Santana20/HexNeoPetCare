@@ -45,8 +45,18 @@ public class Mascota
 	@JoinColumn(name = "TipoMascota")
 	@JsonIgnore
 	private TipoMascota tipomascota;
-	
-	
+
+	public Mascota() {
+	}
+
+	public Mascota(String nombre, int edad, double peso, Usuario usuario, TipoMascota tipomascota) {
+		Nombre = nombre;
+		this.edad = edad;
+		this.peso = peso;
+		this.usuario = usuario;
+		this.tipomascota = tipomascota;
+	}
+
 	public Long getIdMascota() {
 		return idMascota;
 	}
