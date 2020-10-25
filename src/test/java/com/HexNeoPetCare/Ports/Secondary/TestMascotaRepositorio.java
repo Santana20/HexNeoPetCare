@@ -3,20 +3,14 @@ package com.HexNeoPetCare.Ports.Secondary;
 import com.HexNeoPetCare.Domain.Mascota;
 import com.HexNeoPetCare.Domain.TipoMascota;
 import com.HexNeoPetCare.Domain.Usuario;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -32,95 +26,97 @@ class TestMascotaRepositorio {
     @Autowired
     private TipoMascotaRepositorio tipoMascotaRepositorio;
 
+    private final Usuario usuario = new Usuario("prueba", "prueba", "prueba", "prueba@gmail.com", "123456897", "prueba", "prueba");
+    private final TipoMascota tipoMascota = new TipoMascota("Perro");
+    private Long idMascotaLast;
+    private final String nombreMascotaLast = "Rocky";
+    private Long idUsuarioAux;
+
+    @BeforeEach
+    void setup()
+    {
+        //CONFIG
+        idUsuarioAux = usuarioRepositorio.save(usuario).getIdUsuario();
+        tipoMascotaRepositorio.save(tipoMascota);
+        idMascotaLast =  objtest_repo.save(new Mascota(nombreMascotaLast, 5, 10.5, usuario, tipoMascota)).getIdMascota();
+    }
+
     @Test
     @Order(1)
-    void testInsertarMascota()
-    {
-        //Dado
-        Usuario usuario = usuarioRepositorio.encontrarUsuarioporId((long) 1);
-        TipoMascota tipoMascota = tipoMascotaRepositorio.encontrarTipoMascotaporId((long) 1);
+    void testInsertarMascota() {
+
+        //DADO
         Mascota mascota = new Mascota("Firulais", 5, 10.5, usuario, tipoMascota);
 
-        //Cuando
-        Mascota mascotaSaved = objtest_repo.save(mascota);
 
-        //Entonces
+        //CUANDO
+        int nBefore = objtest_repo.findAll().size();
+        Mascota mascotaSaved = objtest_repo.save(mascota);
+        int nAfter = objtest_repo.findAll().size();
+
+        //ENTONCES
         assertNotNull(mascotaSaved);
+        assertEquals(nAfter, nBefore + 1);
     }
 
     @Test
     @Order(2)
     void testlistarMascotas()
     {
-        //Dado
+        //DADO
 
-        //Cuando
+        //CUANDO
         List<Mascota> mascotas = objtest_repo.findAll();
 
-        //Entonces
+        //ENTONCES
         assertNotNull(mascotas);
         assertTrue(mascotas.size() > 0);
     }
 
     @Test
     @Order(3)
-    void testActualizarMascota()
+    void testEncontrarMascotaporId()
     {
-        //Dado
-        int nBeforeTest = objtest_repo.findAll().size();
-        Long idMascota = (long) 1;
+        //DADO
+        Long idMascota = idMascotaLast;
+
+        //CUANDO
         Mascota mascotatest = objtest_repo.encontrarMascotaporId(idMascota);
-        String nuevoNombre = "Tom";
-        mascotatest.setNombre(nuevoNombre);
 
-        //Cuando
-        objtest_repo.save(mascotatest);
-        int nAfterTest = objtest_repo.findAll().size();
-        Mascota afterTestMascota = objtest_repo.encontrarMascotaporId(idMascota);
-
-        //Entonces
-        assertEquals(mascotatest, afterTestMascota);
-        assertEquals(nBeforeTest, nAfterTest);
-    }
-
-    @Test
-    @Order(7)
-    void testEliminarMascota()
-    {
-        //Dado
-        Long codMascota = (long) 1;
-
-        //Cuando
-        boolean existeMascotaBefore = objtest_repo.existsById(codMascota);
-        objtest_repo.deleteById(codMascota);
-        boolean existeMascotaAfter = objtest_repo.existsById(codMascota);
-        //Entonces
-
-        assertTrue(existeMascotaBefore);
-        assertFalse(existeMascotaAfter);
+        //ENTONCES
+        assertNotNull(mascotatest);
+        assertEquals(mascotatest.getIdMascota(), idMascota);
     }
 
     @Test
     @Order(4)
-    void testEncontrarMascotaporId()
+    void testActualizarMascota()
     {
-        //Dado
-        Long idMascota = (long) 1;
-
-        //Cuando
+        //DADO
+        Long idMascota = idMascotaLast;
         Mascota mascotatest = objtest_repo.encontrarMascotaporId(idMascota);
+        String nuevoNombre = "Tom";
+        mascotatest.setNombre(nuevoNombre);
 
-        //Entonces
-        assertNotNull(mascotatest);
-        assertEquals(mascotatest.getIdMascota(), (long) 1);
+        //CUANDO
+        int nBeforeTest = objtest_repo.findAll().size();
+        objtest_repo.save(mascotatest);
+        int nAfterTest = objtest_repo.findAll().size();
+        Mascota afterTestMascota = objtest_repo.encontrarMascotaporId(idMascota);
+
+        //ENTONCES
+        assertEquals(mascotatest, afterTestMascota);
+        assertEquals(nBeforeTest, nAfterTest);
+        assertEquals(afterTestMascota.getNombre(), nuevoNombre);
     }
+
 
     @Test
     @Order(5)
     void testObtenerMascotaporidUsuario()
     {
         //Dado
-        Long codUsuario = (long) 1;
+        Long codUsuario = idUsuarioAux;
 
         //Cuando
         List<Mascota> mascotas = objtest_repo.obtenerMascotasporidUsuario(codUsuario);
@@ -135,8 +131,8 @@ class TestMascotaRepositorio {
     void testEncontrarMascotasporNombreYUsuario()
     {
         //Dado
-        Long codUsuario = (long) 1;
-        String nombreMascota = "Firulais";
+        Long codUsuario = idUsuarioAux;
+        String nombreMascota = nombreMascotaLast;
 
         //Cuando
         List<Mascota> mascotas = objtest_repo.encontrarMascotasporNombreYUsuario(codUsuario, nombreMascota);
@@ -144,5 +140,22 @@ class TestMascotaRepositorio {
         //Entonces
         assertNotNull(mascotas);
         assertTrue(mascotas.size() > 0);
+    }
+
+    @Test
+    @Order(7)
+    void testEliminarMascota()
+    {
+        //DADO
+        Long codMascota = idMascotaLast;
+
+        //CUANDO
+        boolean existeMascotaBefore = objtest_repo.existsById(codMascota);
+        objtest_repo.deleteById(codMascota);
+        boolean existeMascotaAfter = objtest_repo.existsById(codMascota);
+
+        //ENTONCES
+        assertTrue(existeMascotaBefore);
+        assertFalse(existeMascotaAfter);
     }
 }

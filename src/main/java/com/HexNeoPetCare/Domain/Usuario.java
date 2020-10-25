@@ -26,7 +26,20 @@ public class Usuario
 	private String celular;
 	private String username;
 	private String password;
-	
+
+	public Usuario() {
+	}
+
+	public Usuario(String nombre, String apellido, String direccion, String correo, String celular, String username, String password) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.correo = correo;
+		this.celular = celular;
+		this.username = username;
+		this.password = password;
+	}
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Mascota> mascotas;
 	

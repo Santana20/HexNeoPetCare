@@ -16,4 +16,3 @@ public interface VacunaMascotaRepositorio extends JpaRepository<VacunaMascota, L
 	@Query( "Select r from VacunaMascota r where r.mascota.idMascota = :idMascota" )
 	List<VacunaMascota> listarVacunasdeMascota( @Param("idMascota") Long idMascota );
 }
-

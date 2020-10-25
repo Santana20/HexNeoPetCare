@@ -33,6 +33,14 @@ public class Vacuna
 	@JsonIgnore
 	private TipoMascota tipomascota;
 
+	public Vacuna() {
+	}
+
+	public Vacuna(String nombrevacuna, TipoMascota tipomascota) {
+		this.nombrevacuna = nombrevacuna;
+		this.tipomascota = tipomascota;
+	}
+
 	public Long getIdVacuna() {
 		return idVacuna;
 	}

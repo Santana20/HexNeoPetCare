@@ -26,6 +26,15 @@ public class TipoMascota
 	@OneToMany(mappedBy = "tipomascota", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Vacuna> vacunas;
 
+	public TipoMascota()
+	{
+		//UTILIZADO PARA CONVERTIR A FORMATO JSON
+	}
+
+	public TipoMascota(String nombreTipo) {
+		this.nombreTipo = nombreTipo;
+	}
+
 	public Long getIdTipo() {
 		return idTipo;
 	}

@@ -34,6 +34,17 @@ public class VacunaMascota
 	@JsonIgnore
 	private Vacuna vacuna;
 
+	public VacunaMascota(){
+	}
+
+	public VacunaMascota(Date fechaRegistro, Date fechaVacunaRealizada, boolean status, Mascota mascota, Vacuna vacuna) {
+		FechaRegistro = fechaRegistro;
+		FechaVacunaRealizada = fechaVacunaRealizada;
+		this.status = status;
+		this.mascota = mascota;
+		this.vacuna = vacuna;
+	}
+
 	public Date getFechaRegistro() {
 		return FechaRegistro;
 	}
