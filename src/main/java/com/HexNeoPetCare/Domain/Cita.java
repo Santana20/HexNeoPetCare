@@ -34,6 +34,14 @@ public class Cita
 	private Boolean estado;
 	
 	
+	public Cita(Date fecha, boolean estado, Veterinario veterinario, Mascota mascota) {
+		this.fecha = fecha;
+		this.estado = estado;
+		this.veterinario = veterinario;
+		this.mascota = mascota;
+	}
+	
+
 	public Long getIdCita() {
 		return idCita;
 	}
