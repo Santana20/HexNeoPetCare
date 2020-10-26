@@ -33,6 +33,10 @@ public class Veterinario
 	
 	@OneToMany(mappedBy = "veterinario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Cita> citas;
+
+	public Veterinario(){
+
+	}
 	
 	public Veterinario(String nombre, String apellido, String direccion_consultorio, String correo, String celular, String username,
 			String password) {

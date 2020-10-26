@@ -26,7 +26,10 @@ public class Horario
 	@JoinColumn(name = "Veterinario")
 	@JsonIgnore
 	private Veterinario veterinario;
-	
+
+	public Horario(){
+
+	}
 	
 	public Horario(String dia, String hora, String nota, Veterinario veterinario) {
 		this.dia = dia;

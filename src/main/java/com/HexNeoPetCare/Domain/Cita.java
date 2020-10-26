@@ -32,7 +32,10 @@ public class Cita
 	
 	private Date fecha;
 	private Boolean estado;
-	
+
+	public Cita(){
+
+	}
 	
 	public Cita(Date fecha, boolean estado, Veterinario veterinario, Mascota mascota) {
 		this.fecha = fecha;
