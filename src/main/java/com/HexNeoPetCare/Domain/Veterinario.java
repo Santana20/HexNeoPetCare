@@ -34,6 +34,7 @@ public class Veterinario
 	@OneToMany(mappedBy = "veterinario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Cita> citas;
 
+
 	public Veterinario() {
 	}
 

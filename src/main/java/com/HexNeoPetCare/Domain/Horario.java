@@ -27,6 +27,7 @@ public class Horario
 	@JsonIgnore
 	private Veterinario veterinario;
 
+
 	public Horario() {
 	}
 
