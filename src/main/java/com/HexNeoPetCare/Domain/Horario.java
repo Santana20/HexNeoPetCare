@@ -28,6 +28,13 @@ public class Horario
 	private Veterinario veterinario;
 	
 	
+	public Horario(String dia, String hora, String nota, Veterinario veterinario) {
+		this.dia = dia;
+		this.hora = hora;
+		this.nota = nota;
+		this.veterinario = veterinario;
+	}
+	
 	public Long getIdHorario() {
 		return idHorario;
 	}

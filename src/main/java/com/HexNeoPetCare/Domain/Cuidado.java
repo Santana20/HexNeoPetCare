@@ -24,6 +24,10 @@ public class Cuidado
 	@OneToMany(mappedBy = "cuidado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<RegistroCuidado> registro_cuidado;
 
+	public Cuidado(String nombre) {
+		this.nombre = nombre;
+	}
+
 	public Long getIdCuidado() {
 		return idCuidado;
 	}

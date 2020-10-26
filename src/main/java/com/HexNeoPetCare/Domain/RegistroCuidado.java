@@ -36,6 +36,18 @@ public class RegistroCuidado
 	private Date fechaRealizado;
 	private boolean status; 
 	
+	public RegistroCuidado() {
+	
+	}
+	
+	public RegistroCuidado(Date fechaRegistro, Date fechaRealizado, boolean status, Mascota mascota, Cuidado cuidado) {
+		this.fechaRegistro = fechaRegistro;
+		this.fechaRealizado = fechaRealizado;
+		this.status = status;
+		this.mascota = mascota;
+		this.cuidado = cuidado;
+	}
+	
 	public Mascota getMascota() {
 		return mascota;
 	}
