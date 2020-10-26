@@ -17,9 +17,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TestRegistroCuidadoRepositorio {
+
+    @Autowired
+    private CuidadoRepositorio cuidadoRepositorio;
 
     @Autowired
     private RegistroCuidadoRepositorio objtest_repo;
@@ -52,6 +54,7 @@ class TestRegistroCuidadoRepositorio {
     void setup()
     {
         //CONFIG
+        cuidadoRepositorio.save(cuidado);
         usuarioRepositorio.save(usuario);
     	tipoMascotaRepositorio.save(tipoMascota);
         idMascotaAux = mascotaRepositorio.save(mascota).getIdMascota();

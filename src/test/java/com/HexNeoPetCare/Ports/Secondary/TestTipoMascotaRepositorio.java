@@ -11,7 +11,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TestTipoMascotaRepositorio
 {
