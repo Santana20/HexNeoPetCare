@@ -70,7 +70,7 @@ public class Mascota
 	}
 
 	public void setNombre(String nombre) {
-		Nombre = nombre;
+		this.Nombre = nombre;
 	}
 
 	public int getEdad() {
@@ -128,6 +128,14 @@ public class Mascota
 	public void setTipomascota(TipoMascota tipomascota) {
 		this.tipomascota = tipomascota;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Mascota{" +
+				"idMascota=" + idMascota +
+				", Nombre='" + Nombre + '\'' +
+				", edad=" + edad +
+				", peso=" + peso +
+				'}';
+	}
 }

@@ -28,6 +28,8 @@ public class VacunaMascotaServicio
 	//REGISTRAR VACUNA DE UNA MASCOTA
 	public void registrarVacunaMascota(Long idMascota, Long idVacuna, VacunaMascota vm) throws Exception
 	{
+		if (vm.getFechaRegistro() == null || idVacuna == null) throw new Exception("No se llenaron todo los datos.");
+
 		Mascota m = repositorioMascota.encontrarMascotaporId(idMascota);
 		if ( m == null ) throw new Exception("Mascota no encontrada.");
 		Vacuna v = servicioVacuna.obtenerVacuna(idVacuna);
@@ -37,7 +39,6 @@ public class VacunaMascotaServicio
 		vm.setMascota(m);
 		vm.setVacuna(v);
 		repositorioVacunaMascota.save(vm);
-		return;
 	}
 	
 	//OBTENER VACUNA DE LA MASCOTA

@@ -49,4 +49,14 @@ public class MascotaDTO
 		this.idtipomascota = idtipomascota;
 	}
 
+	@Override
+	public String toString() {
+		return "MascotaDTO{" +
+				"idMascota=" + idMascota +
+				", nombre='" + nombre + '\'' +
+				", edad=" + edad +
+				", peso=" + peso +
+				", idtipomascota=" + idtipomascota +
+				'}';
+	}
 }

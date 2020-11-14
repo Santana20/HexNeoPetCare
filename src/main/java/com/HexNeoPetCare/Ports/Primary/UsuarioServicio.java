@@ -15,8 +15,9 @@ public class UsuarioServicio
 	private UsuarioRepositorio RepositorioUsuario;
 
 	//REGISTRAR USUARIO
-	public void registrarUsuario(Usuario usuario)
-	{
+	public void registrarUsuario(Usuario usuario) throws Exception {
+		if (usuario.getNombre() == null || usuario.getApellido() == null || usuario.getDireccion() == null || usuario.getCorreo() == null ||
+			usuario.getCelular() == null || usuario.getUsername() == null || usuario.getPassword() == null) throw new Exception("No se ingresaron todos los datos.");
 		RepositorioUsuario.save(usuario);
 	}
 

@@ -36,7 +36,7 @@ public class RestMascota
 		Mascota m = null;
 		Long idtipoMascota = null;
 		try
-		{	
+		{
 			m = convertermascota.convertToMascota(mascota);
 			idtipoMascota = mascota.getIdtipomascota();
 			
@@ -44,9 +44,8 @@ public class RestMascota
 		}
 		catch (Exception e)
 		{
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo registrar a la mascota."+e.getMessage());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo registrar a la mascota. " + e.getMessage());
 		}
-		return;
 	}
 	
 	//ACTUALIZAR MASCOTA
