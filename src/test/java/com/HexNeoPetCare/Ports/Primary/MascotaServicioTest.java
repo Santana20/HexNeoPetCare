@@ -38,7 +38,7 @@ class MascotaServicioTest {
     private final Usuario usuario = new Usuario("Sebastian", "Contreras", "Jr. Ayacucho 458",
             "sebastian@prueba.com", "999999999", "sebastian", "123456");
     private final TipoMascota tipoMascota = new TipoMascota("Perro");
-    private final List<Mascota> mascotaList = new ArrayList<Mascota>();
+    private final List<Mascota> mascotaList = new ArrayList<>();
 
     @Test
     void registrarMascota() throws Exception {

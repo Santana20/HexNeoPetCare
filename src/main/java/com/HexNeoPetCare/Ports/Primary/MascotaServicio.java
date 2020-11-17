@@ -51,7 +51,12 @@ public class MascotaServicio {
 
         Mascota m = obtenerMascota(idMascota);
 
-        if (mascota.getNombre() != null) m.setNombre(mascota.getNombre());
+
+        if (mascota.getNombre() != null) {
+            if (RepositorioMascota.encontrarMascotaporNombreYUsuario(m.getUsuario().getIdUsuario(), mascota.getNombre()) != null)
+                throw new Exception("Una de sus mascotas ya tiene ese nombre.");
+            m.setNombre(mascota.getNombre());
+        }
 
         if (mascota.getEdad() != 0) m.setEdad(mascota.getEdad());
 
@@ -66,11 +71,11 @@ public class MascotaServicio {
     }
 
     //ELIMINAR MASCOTA
-    public void eliminarMascota(Long codigo) throws Exception {
+    public Long eliminarMascota(Long codigo) throws Exception {
         Mascota m = obtenerMascota(codigo);
 
         RepositorioMascota.delete(m);
-        return;
+        return m.getIdMascota();
     }
 
     //LISTAR TODAS LAS MASCOTAS
