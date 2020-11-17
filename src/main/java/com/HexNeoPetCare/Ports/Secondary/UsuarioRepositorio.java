@@ -10,4 +10,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long>
 {
 	@Query( "Select v from Usuario v where v.idUsuario = :idUsuario" )
 	Usuario encontrarUsuarioporId( @Param("idUsuario") Long idUsuario );
+
+	@Query( "Select v from Usuario v where v.correo = :correo" )
+	Usuario encontrarUsuarioporCorreo( @Param("correo") String correo );
 }

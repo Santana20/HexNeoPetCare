@@ -23,7 +23,7 @@ public class MascotaServicio {
     private TipoMascotaServicio servicioTipoMascota;
 
     //REGISTRAR MASCOTA
-    public void registrarMascota(Long codUsuario, Long idtipomascota, Mascota m) throws Exception {
+    public Mascota registrarMascota(Long codUsuario, Long idtipomascota, Mascota m) throws Exception {
         Usuario u = servicioUsuario.obtenerUsuario(codUsuario);
 
         TipoMascota tm = servicioTipoMascota.obtenerTipoMascota(idtipomascota);
@@ -31,12 +31,12 @@ public class MascotaServicio {
         if (m.getNombre() == null || idtipomascota == null || m.getEdad() < 0 || m.getPeso() < 0.0)
             throw new Exception("No se completo todos los datos o son ivalidos.");
 
-        if (RepositorioMascota.encontrarMascotasporNombreYUsuario(u.getIdUsuario(), m.getNombre()).size() > 0)
+        if (RepositorioMascota.encontrarMascotaporNombreYUsuario(u.getIdUsuario(), m.getNombre()) != null)
             throw new Exception("Una de sus mascotas ya tiene ese nombre.");
 
         m.setUsuario(u);
         m.setTipomascota(tm);
-        RepositorioMascota.save(m);
+        return RepositorioMascota.save(m);
     }
 
     //OBTENER MASCOTA
@@ -47,7 +47,7 @@ public class MascotaServicio {
     }
 
     //ACTUALIZAR MASCOTA
-    public void actualizarMascota(Long idMascota, Long idTipoMascota, Mascota mascota) throws Exception {
+    public Mascota actualizarMascota(Long idMascota, Long idTipoMascota, Mascota mascota) throws Exception {
 
         Mascota m = obtenerMascota(idMascota);
 
@@ -62,8 +62,7 @@ public class MascotaServicio {
             m.setTipomascota(tm);
         }
 
-        RepositorioMascota.save(m);
-        return;
+        return RepositorioMascota.save(m);
     }
 
     //ELIMINAR MASCOTA

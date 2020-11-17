@@ -134,11 +134,10 @@ class TestMascotaRepositorio {
         String nombreMascota = nombreMascotaLast;
 
         //Cuando
-        List<Mascota> mascotas = objtest_repo.encontrarMascotasporNombreYUsuario(codUsuario, nombreMascota);
+        Mascota mascota = objtest_repo.encontrarMascotaporNombreYUsuario(codUsuario, nombreMascota);
 
         //Entonces
-        assertNotNull(mascotas);
-        assertTrue(mascotas.size() > 0);
+        assertNotNull(mascota);
     }
 
     @Test

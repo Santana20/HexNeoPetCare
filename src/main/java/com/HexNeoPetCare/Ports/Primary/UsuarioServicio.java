@@ -18,6 +18,10 @@ public class UsuarioServicio
 	public void registrarUsuario(Usuario usuario) throws Exception {
 		if (usuario.getNombre() == null || usuario.getApellido() == null || usuario.getDireccion() == null || usuario.getCorreo() == null ||
 			usuario.getCelular() == null || usuario.getUsername() == null || usuario.getPassword() == null) throw new Exception("No se ingresaron todos los datos.");
+
+		if (RepositorioUsuario.encontrarUsuarioporCorreo(usuario.getCorreo()) != null)
+			throw new Exception("El correo ya se ha registrado.");
+
 		RepositorioUsuario.save(usuario);
 	}
 
