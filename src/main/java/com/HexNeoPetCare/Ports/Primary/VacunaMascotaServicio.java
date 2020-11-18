@@ -26,7 +26,7 @@ public class VacunaMascotaServicio
 	private VacunaServicio servicioVacuna;
 	
 	//REGISTRAR VACUNA DE UNA MASCOTA
-	public void registrarVacunaMascota(Long idMascota, Long idVacuna, VacunaMascota vm) throws Exception
+	public VacunaMascota registrarVacunaMascota(Long idMascota, Long idVacuna, VacunaMascota vm) throws Exception
 	{
 		if (vm.getFechaRegistro() == null || idVacuna == null) throw new Exception("No se llenaron todo los datos.");
 
@@ -38,7 +38,7 @@ public class VacunaMascotaServicio
 			throw new Exception("El tipo de la vacuna y la mascota no son iguales");
 		vm.setMascota(m);
 		vm.setVacuna(v);
-		repositorioVacunaMascota.save(vm);
+		return repositorioVacunaMascota.save(vm);
 	}
 	
 	//OBTENER VACUNA DE LA MASCOTA

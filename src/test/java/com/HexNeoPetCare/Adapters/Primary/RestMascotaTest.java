@@ -57,9 +57,9 @@ public class RestMascotaTest {
         Long idtipoMascota = Long.valueOf(1);
 
         MascotaDTO inputmascota = new MascotaDTO();
-        inputmascota.setNombre("Rocky");
-        inputmascota.setEdad(8);
-        inputmascota.setPeso(5.6);
+        inputmascota.setNombre(this.mascota.getNombre());
+        inputmascota.setEdad(this.mascota.getEdad());
+        inputmascota.setPeso(this.mascota.getPeso());
         inputmascota.setIdtipomascota(idtipoMascota);
 
         Mockito.when(servicioMascota.registrarMascota(Mockito.anyLong(), Mockito.anyLong(),
@@ -108,6 +108,7 @@ public class RestMascotaTest {
         Mockito.when(servicioMascota.eliminarMascota(Mockito.anyLong()))
                 .thenReturn(codMascota);
         String uri = "/api/mascota/eliminarMascota/" + codMascota.toString();
+
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .delete(uri);
 
@@ -166,7 +167,6 @@ public class RestMascotaTest {
     }
 
     private String mapToJson(Object object) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(object);
+        return this.objectMapper.writeValueAsString(object);
     }
 }

@@ -20,13 +20,13 @@ public class VacunaServicio
 	private TipoMascotaServicio servicioTipoMascota;
 	
 	//REGISTRO DE VACUNA
-	public void registrarVacuna(Long idTipoMascota, Vacuna vacuna) throws Exception
+	public Vacuna registrarVacuna(Long idTipoMascota, Vacuna vacuna) throws Exception
 	{
 		TipoMascota tm = servicioTipoMascota.obtenerTipoMascota(idTipoMascota);
 		//if (vacuna.getNombreVacuna() == null) throw new Exception("si se agarra el nombre vacuna"+vacuna.getNombreVacuna());
 		vacuna.setTipomascota(tm);
-		RepositorioVacuna.save(vacuna);
-		return;
+
+		return RepositorioVacuna.save(vacuna);
 	}
 	
 	//OBTENER VACUNA
@@ -49,11 +49,12 @@ public class VacunaServicio
 	}
 	
 	//ELIMINAR VACUNA
-	public void eliminarVacuna(Long idVacuna) throws Exception
+	public Long eliminarVacuna(Long idVacuna) throws Exception
 	{
 		Vacuna c = obtenerVacuna(idVacuna);
 		
 		RepositorioVacuna.delete(c);
+		return c.getIdVacuna();
 	}
 	
 	//LISTAR TODAS LOS VACUNA
