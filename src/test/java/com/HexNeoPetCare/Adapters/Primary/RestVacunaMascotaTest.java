@@ -2,6 +2,7 @@ package com.HexNeoPetCare.Adapters.Primary;
 
 import com.HexNeoPetCare.DTOClass.VacunaMascotaDTO;
 import com.HexNeoPetCare.Domain.Mascota;
+import com.HexNeoPetCare.Domain.Vacuna;
 import com.HexNeoPetCare.Domain.VacunaMascota;
 import com.HexNeoPetCare.Ports.Primary.VacunaMascotaServicio;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,12 +14,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -64,11 +69,47 @@ public class RestVacunaMascotaTest {
     }
 
     @Test
-    public void actualizarEstadoVacunaMascota() {
+    public void actualizarEstadoVacunaMascota() throws Exception {
+        Long idVacunaMascota = Long.valueOf(1);
+
+        Mockito.when(servicioVacunaMascota.actualizarEstadoVacunaMascota(idVacunaMascota))
+                .thenReturn(this.vacunaMascota);
+
+        String uri = "/api/vacunamascota/actualizarEstadoVacunaMascota/" + idVacunaMascota.toString();
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(uri)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mockMvc.perform(requestBuilder)
+                .andExpect(status().is(200));
     }
 
     @Test
-    public void listarVacunasdeMascota() {
+    public void listarVacunasdeMascota() throws Exception {
+        Long idMascota = Long.valueOf(1);
+        List<VacunaMascota> listavacunamascota = new ArrayList<>();
+        listavacunamascota.add(this.vacunaMascota);
+        listavacunamascota.add(new VacunaMascota(new Date(), new Date(), true, null, null));
+
+
+        Mockito.when(servicioVacunaMascota.listarVacunasdeMascota(idMascota))
+                .thenReturn(listavacunamascota);
+        String uri = "/api/vacunamascota/listarVacunasdeMascota/" + idMascota.toString();
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get(uri)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = this.mockMvc
+                .perform(requestBuilder)
+                .andExpect(status().is(200))
+                .andReturn();
+
+        String expectedJson = this.mapToJson(listavacunamascota);
+        String outputInJson = result.getResponse().getContentAsString();
+        assertThat(outputInJson).isEqualTo(expectedJson);
+
     }
 
     private String mapToJson(Object object) throws JsonProcessingException {

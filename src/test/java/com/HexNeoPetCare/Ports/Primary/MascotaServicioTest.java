@@ -72,12 +72,17 @@ class MascotaServicioTest {
     void actualizarMascota() throws Exception {
         Long codMascota = Long.valueOf(1);
         Long idTipoMascota = Long.valueOf(1);
+        Long idUsuario = Long.valueOf(1);
+        this.usuario.setIdUsuario(idUsuario);
+        this.mascota.setUsuario(this.usuario);
         Mascota paramMascota = new Mascota("Felipe", 8, 5.6, null, null);
 
 
         Mockito.when(repositorioMascota.encontrarMascotaporId(codMascota)).thenReturn(this.mascota);
         Mockito.when(servicioTipoMascota.obtenerTipoMascota(idTipoMascota)).thenReturn(this.tipoMascota);
         Mockito.when(repositorioMascota.save(this.mascota)).thenReturn(this.mascota);
+        Mockito.when(repositorioMascota.encontrarMascotaporNombreYUsuario(idUsuario, paramMascota.getNombre()))
+                .thenReturn(null);
 
         Mascota result = this.mascotaServicio.actualizarMascota(codMascota, null, paramMascota);
 
@@ -86,8 +91,16 @@ class MascotaServicioTest {
     }
 
     @Test
-    void eliminarMascota() {
+    void eliminarMascota() throws Exception {
+        Long idMascota = Long.valueOf(1);
+        this.mascota.setIdMascota(idMascota);
 
+        Mockito.when(repositorioMascota.encontrarMascotaporId(idMascota)).thenReturn(this.mascota);
+
+        Long idResult = this.mascotaServicio.eliminarMascota(idMascota);
+
+        assertNotNull(idResult);
+        assertEquals(idMascota, idResult);
     }
 
     @Test

@@ -50,15 +50,15 @@ public class VacunaMascotaServicio
 	}
 	
 	//ACTUALIZAR ESTADO DE LA VACUNA DE LA MASCOTA
-	public void actualizarEstadoVacunaMascota(Long idVacunaMascota) throws Exception
+	public VacunaMascota actualizarEstadoVacunaMascota(Long idVacunaMascota) throws Exception
 	{
 		VacunaMascota vm = obtenerVacunaMascota(idVacunaMascota);
 		if (vm.isStatus()) throw new Exception("Ya fue actualizado el estado de la vacuna de la mascota.");
 		
 		vm.setStatus(true);
 		vm.setFechaVacunaRealizada(new Date());
-		repositorioVacunaMascota.save(vm);
-		return;
+
+		return repositorioVacunaMascota.save(vm);
 	}
 	
 	//LISTAR VACUNAS DE UNA MASCOTA

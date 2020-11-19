@@ -15,14 +15,14 @@ public class UsuarioServicio
 	private UsuarioRepositorio RepositorioUsuario;
 
 	//REGISTRAR USUARIO
-	public void registrarUsuario(Usuario usuario) throws Exception {
+	public Usuario registrarUsuario(Usuario usuario) throws Exception {
 		if (usuario.getNombre() == null || usuario.getApellido() == null || usuario.getDireccion() == null || usuario.getCorreo() == null ||
 			usuario.getCelular() == null || usuario.getUsername() == null || usuario.getPassword() == null) throw new Exception("No se ingresaron todos los datos.");
 
 		if (RepositorioUsuario.encontrarUsuarioporCorreo(usuario.getCorreo()) != null)
 			throw new Exception("El correo ya se ha registrado.");
 
-		RepositorioUsuario.save(usuario);
+		return RepositorioUsuario.save(usuario);
 	}
 
 	//OBTENER USUARIO
@@ -34,7 +34,7 @@ public class UsuarioServicio
 	}
 
 	//ACTUALIZAR USUARIO
-	public void actualizarUsuario(Long idUsuario, Usuario usuario) throws Exception
+	public Usuario actualizarUsuario(Long idUsuario, Usuario usuario) throws Exception
 	{
 		Usuario u = obtenerUsuario(idUsuario);
 
@@ -46,20 +46,6 @@ public class UsuarioServicio
 		if (usuario.getUsername() != null) u.setUsername(usuario.getUsername());
 		if (usuario.getPassword() != null) u.setPassword(usuario.getPassword());
 
-		RepositorioUsuario.save(u);
-	}
-
-	//ELIMINAR USUARIO
-	public void eliminarVeterinario(Long codUsuario) throws Exception
-	{
-		Usuario u = obtenerUsuario(codUsuario);
-
-		RepositorioUsuario.delete(u);
-	}
-
-	//LISTAR TODOS LOS VETERINARIOS
-	public List<Usuario> listarUsuarios()
-	{
-		return RepositorioUsuario.findAll();
+		return RepositorioUsuario.save(u);
 	}
 }

@@ -37,17 +37,6 @@ public class VacunaServicio
 		return v;
 	}
 	
-	//ACTUALIZAR VACUNA
-	public void actualizarCuidado(Vacuna vacuna) throws Exception
-	{
-		Vacuna v = obtenerVacuna(vacuna.getIdVacuna());
-		
-		if ( vacuna.getNombrevacuna() != null ) v.setNombrevacuna(vacuna.getNombrevacuna());
-		if ( vacuna.getTipomascota() != null ) v.setTipomascota(vacuna.getTipomascota());
-		RepositorioVacuna.save(v);
-		return;
-	}
-	
 	//ELIMINAR VACUNA
 	public Long eliminarVacuna(Long idVacuna) throws Exception
 	{

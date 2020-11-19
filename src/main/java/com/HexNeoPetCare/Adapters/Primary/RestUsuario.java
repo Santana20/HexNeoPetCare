@@ -58,33 +58,4 @@ public class RestUsuario
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo actualizar al usuario " + idUsuario.toString());
         }
     }
-
-    //ELIMINAR USUARIO
-    @DeleteMapping("/eliminarVeterinario/{codUsuario}")
-    public void eliminarVeterinario(@PathVariable(value = "codUsuario") Long codUsuario)
-    {
-        try
-        {
-            usuarioServicio.eliminarVeterinario(codUsuario);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "No se pudo eliminar al usuario " + codUsuario.toString());
-        }
-    }
-
-    //LISTAR TODOS LOS VETERINARIOS
-    @GetMapping("/listarUsuarios")
-    public List<Usuario> listarUsuarios()
-    {
-        List<Usuario> lsUsuarios;
-        try
-        {
-            lsUsuarios = usuarioServicio.listarUsuarios();
-        }
-        catch (Exception e)
-        {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo listar a los usuarios.");
-        }
-        return lsUsuarios;
-    }
 }
