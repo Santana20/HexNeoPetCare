@@ -10,4 +10,7 @@ public interface TipoMascotaRepositorio extends JpaRepository<TipoMascota, Long>
 {
 	@Query( "Select v from TipoMascota v where v.idTipo = :idTipo" )
 	TipoMascota encontrarTipoMascotaporId( @Param("idTipo") Long idTipo );
+
+	@Query( "Select v from TipoMascota v where v.nombreTipo = :nombreTipoMascota" )
+	TipoMascota encontrarTipoMascotaPorNombre( @Param(("nombreTipoMascota")) String nombreTipoMascota );
 }

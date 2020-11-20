@@ -7,7 +7,6 @@ import com.HexNeoPetCare.Ports.Secondary.MascotaRepositorio;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -46,7 +45,7 @@ class MascotaServicioTest {
         Long idtipomascota = Long.valueOf(1);
 
         Mockito.when(servicioUsuario.obtenerUsuario(codUsuario)).thenReturn(this.usuario);
-        Mockito.when(servicioTipoMascota.obtenerTipoMascota(idtipomascota)).thenReturn(this.tipoMascota);
+        Mockito.when(servicioTipoMascota.obtenerTipoMascotaPorId(idtipomascota)).thenReturn(this.tipoMascota);
         Mockito.when(repositorioMascota.encontrarMascotaporNombreYUsuario(codUsuario, this.mascota.getNombre())).thenReturn(null);
         Mockito.when(repositorioMascota.save(this.mascota)).thenReturn(this.mascota);
         
@@ -79,7 +78,7 @@ class MascotaServicioTest {
 
 
         Mockito.when(repositorioMascota.encontrarMascotaporId(codMascota)).thenReturn(this.mascota);
-        Mockito.when(servicioTipoMascota.obtenerTipoMascota(idTipoMascota)).thenReturn(this.tipoMascota);
+        Mockito.when(servicioTipoMascota.obtenerTipoMascotaPorId(idTipoMascota)).thenReturn(this.tipoMascota);
         Mockito.when(repositorioMascota.save(this.mascota)).thenReturn(this.mascota);
         Mockito.when(repositorioMascota.encontrarMascotaporNombreYUsuario(idUsuario, paramMascota.getNombre()))
                 .thenReturn(null);

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -37,7 +36,7 @@ public class VacunaServicioTest {
     public void registrarVacuna() throws Exception {
         Long idTipoMascota = Long.valueOf(1);
 
-        Mockito.when(servicioTipoMascota.obtenerTipoMascota(idTipoMascota)).thenReturn(this.tipoMascota);
+        Mockito.when(servicioTipoMascota.obtenerTipoMascotaPorId(idTipoMascota)).thenReturn(this.tipoMascota);
         Mockito.when(RepositorioVacuna.save(this.vacuna)).thenReturn(this.vacuna);
 
         Vacuna result = this.vacunaServicio.registrarVacuna(idTipoMascota, this.vacuna);

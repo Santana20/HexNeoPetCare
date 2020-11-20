@@ -26,7 +26,7 @@ public class MascotaServicio {
     public Mascota registrarMascota(Long codUsuario, Long idtipomascota, Mascota m) throws Exception {
         Usuario u = servicioUsuario.obtenerUsuario(codUsuario);
 
-        TipoMascota tm = servicioTipoMascota.obtenerTipoMascota(idtipomascota);
+        TipoMascota tm = servicioTipoMascota.obtenerTipoMascotaPorId(idtipomascota);
 
         if (m.getNombre() == null || idtipomascota == null || m.getEdad() < 0 || m.getPeso() < 0.0)
             throw new Exception("No se completo todos los datos o son ivalidos.");
@@ -63,7 +63,7 @@ public class MascotaServicio {
         if (mascota.getPeso() != 0.0) m.setPeso(mascota.getPeso());
 
         if (idTipoMascota != null && idTipoMascota != m.getTipomascota().getIdTipo()) {
-            TipoMascota tm = servicioTipoMascota.obtenerTipoMascota(idTipoMascota);
+            TipoMascota tm = servicioTipoMascota.obtenerTipoMascotaPorId(idTipoMascota);
             m.setTipomascota(tm);
         }
 

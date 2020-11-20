@@ -22,7 +22,7 @@ public class VacunaServicio
 	//REGISTRO DE VACUNA
 	public Vacuna registrarVacuna(Long idTipoMascota, Vacuna vacuna) throws Exception
 	{
-		TipoMascota tm = servicioTipoMascota.obtenerTipoMascota(idTipoMascota);
+		TipoMascota tm = servicioTipoMascota.obtenerTipoMascotaPorId(idTipoMascota);
 		//if (vacuna.getNombreVacuna() == null) throw new Exception("si se agarra el nombre vacuna"+vacuna.getNombreVacuna());
 		vacuna.setTipomascota(tm);
 
