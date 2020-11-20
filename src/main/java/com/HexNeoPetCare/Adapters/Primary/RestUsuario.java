@@ -2,8 +2,10 @@ package com.HexNeoPetCare.Adapters.Primary;
 
 import com.HexNeoPetCare.Domain.Usuario;
 import com.HexNeoPetCare.Ports.Primary.UsuarioServicio;
+import com.HexNeoPetCare.Ports.Secondary.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,6 +17,7 @@ public class RestUsuario
 {
     @Autowired
     private UsuarioServicio usuarioServicio;
+    private UsuarioRepositorio usuarioRepositorio;
 
     //REGISTRAR USUARIO
     @PostMapping("/registrarUsuario")
@@ -58,4 +61,19 @@ public class RestUsuario
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo actualizar al usuario " + idUsuario.toString());
         }
     }
+
+    //LOGIN
+
+    @PostMapping("/login")
+    public void login(@RequestBody String correo, @RequestBody String password) {
+        try
+        {
+            usuarioServicio.validarUsuario(correo, password);
+        }
+        catch (Exception e)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Datos ingresados incorrectos");
+        }
+    }
+
 }

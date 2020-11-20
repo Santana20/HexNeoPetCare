@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service
-public class UsuarioServicio 
+public class UsuarioServicio
 {
 	@Autowired
 	private UsuarioRepositorio RepositorioUsuario;
@@ -47,5 +47,15 @@ public class UsuarioServicio
 		if (usuario.getPassword() != null) u.setPassword(usuario.getPassword());
 
 		return RepositorioUsuario.save(u);
+	}
+
+	public boolean validarUsuario(String correo, String password)
+	{
+		Usuario u = RepositorioUsuario.encontrarUsuarioporCorreo(correo);
+		if (u != null && u.getPassword() == password )
+		return true;
+
+		else
+		return false;
 	}
 }
