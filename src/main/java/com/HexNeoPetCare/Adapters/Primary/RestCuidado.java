@@ -19,68 +19,50 @@ import com.HexNeoPetCare.Ports.Primary.CuidadoServicio;
 
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping("/api")
 public class RestCuidado {
 
-	@Autowired(required= true)
-	private CuidadoServicio cuidadoServicio;
-	
-	//1) Registrar Cuidado
-	@PostMapping("/cuidado/registrar")
-	public void registrarCuidado(@RequestBody Cuidado cuidado) {
-		 try		 {
-			 cuidadoServicio.registrarCuidado(cuidado);        
-			 }
-	
-	        catch (Exception e)		 {
-	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo registrar el cuidado.");
-	        }
-	}
-	
-	//2) Mostrar Cuidado
-	
-	@GetMapping("/cuidado/{idCuidado}")
-	public Cuidado mostrarCuidado(@PathVariable(value = "idCuidado") Long idCuidado) throws Exception {
-		return cuidadoServicio.obtenerCuidado(idCuidado);
-	}
-	
-	//3) Actualizar Cuidado
-	
-    @PutMapping("/cuidado/actualizar")
-    public void actualizarCuidado(@RequestBody Cuidado cuidado)
-    {
-        try        {
-            cuidadoServicio.actualizarCuidado(cuidado);
+    @Autowired(required = true)
+    private CuidadoServicio cuidadoServicio;
+
+    //1) Registrar Cuidado
+    @PostMapping("/cuidado/registrar")
+    public void registrarCuidado(@RequestBody Cuidado cuidado) {
+        try {
+            cuidadoServicio.registrarCuidado(cuidado);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo registrar el cuidado.");
         }
-        catch (Exception e)        {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo actualizar el cuidado.");
-        }
-        return;
     }
-	
-	//4) Eliminar Cuidado
-	
-	@DeleteMapping("/cuidado/eliminar/{idCuidado}")
+
+    //2) Mostrar Cuidado
+
+    @GetMapping("/cuidado/{idCuidado}")
+    public Cuidado mostrarCuidado(@PathVariable(value = "idCuidado") Long idCuidado) throws Exception {
+        return cuidadoServicio.obtenerCuidado(idCuidado);
+    }
+
+
+    //3) Eliminar Cuidado
+
+    @DeleteMapping("/cuidado/eliminar/{idCuidado}")
     public void eliminarCuidado(@PathVariable(value = "idCuidado") Long idCuidado) throws Exception {
 
-		cuidadoServicio.eliminarCuidado(idCuidado);
-	}
-	
-	//5) Mostrar Lista de Cuidados
-	
-	@GetMapping("/cuidado/mostrarLista")
-	public List<Cuidado> mostrarCuidadoLista() {
+        cuidadoServicio.eliminarCuidado(idCuidado);
+    }
+
+    //4) Mostrar Lista de Cuidados
+
+    @GetMapping("/cuidado/mostrarLista")
+    public List<Cuidado> mostrarCuidadoLista() {
         List<Cuidado> IsCuidado = null;
-        try
-        {
-        	IsCuidado = cuidadoServicio.listarCuidados();
-        }
-        catch (Exception e)
-        {
+        try {
+            IsCuidado = cuidadoServicio.listarCuidados();
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudieron listar los cuidados..");
         }
         return IsCuidado;
-	}
-	
+    }
+
 
 }

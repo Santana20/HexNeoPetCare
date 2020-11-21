@@ -43,7 +43,7 @@ public class VacunaServicio
 		Vacuna c = obtenerVacuna(idVacuna);
 		
 		RepositorioVacuna.delete(c);
-		return c.getIdVacuna();
+		return idVacuna;
 	}
 	
 	//LISTAR TODAS LOS VACUNA

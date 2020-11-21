@@ -80,6 +80,20 @@ public class VacunaMascotaServicioTest {
     }
 
     @Test
+    public void eliminarVacunadeMascota() throws Exception {
+        Long idVacunaMascota = Long.valueOf(1);
+
+        Mockito.when(repositorioVacunaMascota
+                .encontrarVacunaMascotaporId(idVacunaMascota))
+                .thenReturn(this.vacunaMascota);
+
+        Long result = this.vacunaMascotaServicio.eliminarVacunadeMascota(idVacunaMascota);
+
+        assertNotNull(result);
+        assertEquals(idVacunaMascota, result);
+    }
+
+    @Test
     public void listarVacunasdeMascota() {
         Long idMascota = Long.valueOf(1);
         List<VacunaMascota> vacunaMascotaList = new ArrayList<>();

@@ -15,9 +15,9 @@ public class CuidadoServicio
 	private CuidadoRepositorio RepositorioCuidado;
 	
 	//REGISTRAR CUIDADO
-	public void registrarCuidado(Cuidado cita)
+	public Cuidado registrarCuidado(Cuidado cuidado)
 	{
-		RepositorioCuidado.save(cita);
+		return RepositorioCuidado.save(cuidado);
 	}
 	
 	//OBTENER CUIDADO
@@ -28,23 +28,13 @@ public class CuidadoServicio
 		return c;
 	}
 	
-	//ACTUALIZAR CUIDADO
-	public void actualizarCuidado(Cuidado cuidado) throws Exception
-	{
-		Cuidado c = obtenerCuidado(cuidado.getIdCuidado());
-		
-		if ( cuidado.getNombre() != null ) c.setNombre(cuidado.getNombre());
-
-		RepositorioCuidado.save(c);
-		return;
-	}
-	
 	//ELIMINAR CUIDADO
-	public void eliminarCuidado(Long codigo) throws Exception
+	public Long eliminarCuidado(Long codigo) throws Exception
 	{
 		Cuidado c = obtenerCuidado(codigo);
 		
 		RepositorioCuidado.delete(c);
+		return codigo;
 	}
 	
 	//LISTAR TODOS LOS CUIDADOS

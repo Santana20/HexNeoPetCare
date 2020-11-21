@@ -39,7 +39,7 @@ public class RestRegistroCuidado {
 		{
 			regCuidado = converterRegistroCuidado.converterToRegistroCuidado(request);
 			idCuidado = request.getIdCuidado();
-			registroCuidadoServicio.registrarRegistroCuidado(idMascota, idCuidado, regCuidado);       
+			registroCuidadoServicio.registrarRegistroCuidado(idMascota, idCuidado, regCuidado);
 		}
 		catch (Exception e)
 		{

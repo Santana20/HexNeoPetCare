@@ -69,6 +69,22 @@ public class RestVacunaMascotaTest {
     }
 
     @Test
+    public void eliminarVacunadeMascota() throws Exception {
+        Long idVacunaMascota = Long.valueOf(1);
+
+        Mockito.when(servicioVacunaMascota.eliminarVacunadeMascota(idVacunaMascota)).thenReturn(idVacunaMascota);
+        String uri = "/api/vacunamascota/eliminarVacunadeMascota/" + idVacunaMascota.toString();
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete(uri)
+                .accept(MediaType.APPLICATION_JSON);
+
+        this.mockMvc.perform(requestBuilder)
+                .andExpect(status().is(200));
+    }
+
+
+    @Test
     public void actualizarEstadoVacunaMascota() throws Exception {
         Long idVacunaMascota = Long.valueOf(1);
 

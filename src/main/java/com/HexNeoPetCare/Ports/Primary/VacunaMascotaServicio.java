@@ -13,6 +13,7 @@ import com.HexNeoPetCare.Ports.Secondary.MascotaRepositorio;
 import com.HexNeoPetCare.Ports.Secondary.VacunaMascotaRepositorio;
 
 
+
 @Service
 public class VacunaMascotaServicio
 {
@@ -59,6 +60,14 @@ public class VacunaMascotaServicio
 		vm.setFechaVacunaRealizada(new Date());
 
 		return repositorioVacunaMascota.save(vm);
+	}
+
+	//ELIMINAR VACUNA DE UNA MASCOTA
+	public Long eliminarVacunadeMascota(Long idVacunaMascota) throws Exception {
+		VacunaMascota vm = obtenerVacunaMascota(idVacunaMascota);
+
+		this.repositorioVacunaMascota.delete(vm);
+		return idVacunaMascota;
 	}
 	
 	//LISTAR VACUNAS DE UNA MASCOTA

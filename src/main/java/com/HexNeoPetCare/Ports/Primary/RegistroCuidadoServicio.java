@@ -25,7 +25,7 @@ public class RegistroCuidadoServicio
 	private CuidadoRepositorio RepositorioCuidado;
 	
 	//REGISTRAR REGISTRO CUIDADO
-	public void registrarRegistroCuidado(Long idMascota, Long idCuidado, RegistroCuidado registroCuidado) throws Exception
+	public RegistroCuidado registrarRegistroCuidado(Long idMascota, Long idCuidado, RegistroCuidado registroCuidado) throws Exception
 	{
 		Mascota m = RepositorioMascota.encontrarMascotaporId(idMascota);
 		if ( m == null ) throw new Exception("Mascota no encontrada.");
@@ -35,7 +35,7 @@ public class RegistroCuidadoServicio
 		if ( c == null ) throw new Exception("Cuidado no encontrado.");
 		registroCuidado.setCuidado(c);
 		
-		RepositorioRegistroCuidado.save(registroCuidado);
+		return RepositorioRegistroCuidado.save(registroCuidado);
 	}
 	
 	//OBTENER REGISTRO CUIDADO
@@ -47,28 +47,23 @@ public class RegistroCuidadoServicio
 	}
 	
 	//ACTUALIZAR ESTADO DEL CUIDADO DE LA MASCOTA
-	public void actualizarEstadoRegistroCuidado(Long idRegistroCuidado) throws Exception
+	public RegistroCuidado actualizarEstadoRegistroCuidado(Long idRegistroCuidado) throws Exception
 	{
 		RegistroCuidado rc = obtenerRegistroCuidado(idRegistroCuidado);
 		if (rc.isStatus()) throw new Exception("Ya fue actualizado el estado del registro del cuidado de la mascota.");
 		rc.setStatus(true);
 		rc.setFechaRealizado(new Date());
-		RepositorioRegistroCuidado.save(rc);
-		return;
+		return RepositorioRegistroCuidado.save(rc);
 	}
 	
 	//ELIMINAR REGISTRO CUIDADO
-	public void eliminarRegistroCuidado(Long codigo) throws Exception
+	public Long eliminarRegistroCuidado(Long codigo) throws Exception
 	{
 		RegistroCuidado h = obtenerRegistroCuidado(codigo);
 		
 		RepositorioRegistroCuidado.delete(h);
-	}
-	
-	//LISTAR TODOS LOS REGISTROS CUIDADO
-	public List<RegistroCuidado> listarRegistroCuidado()
-	{
-		return RepositorioRegistroCuidado.findAll();
+
+		return codigo;
 	}
 	
 	//LISTAR TODOS LOS REGISTROS CUIDADO POR MASCOTA

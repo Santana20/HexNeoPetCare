@@ -4,13 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.HexNeoPetCare.Converters.VacunaMascotaFromToVacunaMascotaDTOConverter;
@@ -60,10 +54,21 @@ public class RestVacunaMascota
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo actualizar el estado la vacuna de la mascota.");
         }
-		
-		return;
 	}
-	
+
+	//ELIMINAR VACUNA DE UNA MASCOTA
+	@DeleteMapping("/vacunamascota/eliminarVacunadeMascota/{idVacunaMascota}")
+	public void eliminarVacunadeMascota(@PathVariable("idVacunaMascota") Long idVacunaMascota) {
+		try
+		{
+			servicioVacunaMascota.eliminarVacunadeMascota(idVacunaMascota);
+		}
+		catch (Exception e)
+		{
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo eliminar la vacuna de la mascota.");
+		}
+	}
+
 	//LISTAR VACUNAS DE UNA MASCOTA
 	@GetMapping("/vacunamascota/listarVacunasdeMascota/{idMascota}")
 	public List<VacunaMascota> listarVacunasdeMascota(@PathVariable(value = "idMascota") Long idMascota)
