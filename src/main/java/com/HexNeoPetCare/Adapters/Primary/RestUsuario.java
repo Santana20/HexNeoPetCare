@@ -65,15 +65,17 @@ public class RestUsuario
     //LOGIN
 
     @PostMapping("/login")
-    public void login(@RequestBody String correo, @RequestBody String password) {
-        try
-        {
-            usuarioServicio.validarUsuario(correo, password);
-        }
-        catch (Exception e)
-        {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Datos ingresados incorrectos");
-        }
+    public ResponseEntity<?> login(@RequestBody Usuario user) {
+
+        String correo = user.getCorreo();
+        String password = user.getPassword();
+
+        if (usuarioServicio.validarUsuario(correo,password) == true) {
+            System.out.println("Inicio de sesión satisfactorio");
+            return new ResponseEntity<>(HttpStatus.OK);}
+        else
+            System.out.println("Datos ingresados incorrectos");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }

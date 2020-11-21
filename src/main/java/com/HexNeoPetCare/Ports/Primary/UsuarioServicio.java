@@ -52,10 +52,10 @@ public class UsuarioServicio
 	public boolean validarUsuario(String correo, String password)
 	{
 		Usuario u = RepositorioUsuario.encontrarUsuarioporCorreo(correo);
-		if (u != null && u.getPassword() == password )
-		return true;
+		if (u != null && u.getPassword().equals(password)){
+		return true;}
 
-		else
-		return false;
+		else{
+		return false;}
 	}
 }
