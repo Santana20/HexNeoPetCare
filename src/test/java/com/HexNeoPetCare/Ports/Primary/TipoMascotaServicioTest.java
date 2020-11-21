@@ -43,6 +43,39 @@ public class TipoMascotaServicioTest {
     }
 
     @Test
+    public void noRegistrarTipoMascotaConDatosNulos() {
+        TipoMascota tipoMascotaNombreNulo = new TipoMascota();
+        Mockito.when(repositorioTipoMascota
+                .encontrarTipoMascotaPorNombre(tipoMascota.getNombreTipo()))
+                .thenReturn(null);
+        Mockito.when(repositorioTipoMascota.save(tipoMascota))
+                .thenReturn(this.tipoMascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.tipoMascotaServicio.registrarTipoMascota(tipoMascotaNombreNulo);
+                });
+
+        assertEquals("No se ingreso el nombre del tipo de mascota.", exception.getMessage());
+    }
+
+    @Test
+    public void noRegistrarTipoMascotaConNombreRepetido() {
+        Mockito.when(repositorioTipoMascota
+                .encontrarTipoMascotaPorNombre(tipoMascota.getNombreTipo()))
+                .thenReturn(new TipoMascota(this.tipoMascota.getNombreTipo()));
+        Mockito.when(repositorioTipoMascota.save(tipoMascota))
+                .thenReturn(this.tipoMascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.tipoMascotaServicio.registrarTipoMascota(this.tipoMascota);
+                });
+
+        assertEquals("Ya existe un tipo de mascota con el mismo nombre.", exception.getMessage());
+    }
+
+    @Test
     public void obtenerTipoMascotaPorId() throws Exception {
         Long codTipoMascota = Long.valueOf(1);
 
@@ -54,6 +87,22 @@ public class TipoMascotaServicioTest {
 
         assertNotNull(result);
         assertEquals(this.tipoMascota, result);
+    }
+
+    @Test
+    public void noEncontradoTipoMascotaEnObtenerTipoMascotaPorId() {
+        Long codTipoMascota = Long.valueOf(1);
+
+        Mockito.when(repositorioTipoMascota
+                .encontrarTipoMascotaporId(codTipoMascota))
+                .thenReturn(null);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.tipoMascotaServicio.obtenerTipoMascotaPorId(codTipoMascota);
+                });
+
+        assertEquals("Tipo de mascota no encontrado.", exception.getMessage());
     }
 
     @Test

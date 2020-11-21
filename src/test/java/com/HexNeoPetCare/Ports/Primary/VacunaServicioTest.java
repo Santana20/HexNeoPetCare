@@ -58,6 +58,20 @@ public class VacunaServicioTest {
     }
 
     @Test
+    public void noEncontrarVacunaAlObtenerVacuna() {
+        Long codVacuna = Long.valueOf(1);
+
+        Mockito.when(RepositorioVacuna.encontrarVacunaporId(codVacuna)).thenReturn(null);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.vacunaServicio.obtenerVacuna(codVacuna);
+                });
+
+        assertEquals("Vacuna no encontrada.", exception.getMessage());
+    }
+
+    @Test
     public void eliminarVacuna() throws Exception {
         Long idVacuna = Long.valueOf(1);
         this.vacuna.setIdVacuna(idVacuna);

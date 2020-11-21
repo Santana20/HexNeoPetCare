@@ -54,6 +54,22 @@ public class CuidadoServicioTest {
     }
 
     @Test
+    public void noEncontradoCuidadoAlObtenerCuidado() {
+        Long codCuidado = Long.valueOf(1);
+
+        Mockito.when(RepositorioCuidado
+                .encontrarCuidadoporId(codCuidado))
+                .thenReturn(null);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.cuidadoServicio.obtenerCuidado(codCuidado);
+                });
+
+        assertEquals("Cuidado no encontrada.", exception.getMessage());
+    }
+
+    @Test
     public void eliminarCuidado() throws Exception {
         Long codCuidado = Long.valueOf(1);
 

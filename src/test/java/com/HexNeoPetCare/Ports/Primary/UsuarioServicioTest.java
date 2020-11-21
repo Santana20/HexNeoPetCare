@@ -37,6 +37,35 @@ public class UsuarioServicioTest {
     }
 
     @Test
+    public void noRegistrarUsuarioConDatosNulos() {
+        Usuario paramUsuario = new Usuario();
+
+        Mockito.when(RepositorioUsuario.encontrarUsuarioporCorreo(this.usuario.getCorreo())).thenReturn(null);
+        Mockito.when(RepositorioUsuario.save(this.usuario)).thenReturn(this.usuario);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.usuarioServicio.registrarUsuario(paramUsuario);
+                });
+
+        assertEquals("No se ingresaron todos los datos.", exception.getMessage());
+    }
+
+    @Test
+    public void noRegistrarUsuarioConCorreoRepetido() {
+
+        Mockito.when(RepositorioUsuario.encontrarUsuarioporCorreo(this.usuario.getCorreo())).thenReturn(new Usuario());
+        Mockito.when(RepositorioUsuario.save(this.usuario)).thenReturn(this.usuario);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.usuarioServicio.registrarUsuario(this.usuario);
+                });
+
+        assertEquals("El correo ya se ha registrado.", exception.getMessage());
+    }
+
+    @Test
     public void obtenerUsuario() throws Exception {
         Long codUsuario = Long.valueOf(1);
 
@@ -48,14 +77,29 @@ public class UsuarioServicioTest {
     }
 
     @Test
+    public void noEncontrarUsuarioEnObtenerUsuario() throws Exception {
+        Long codUsuario = Long.valueOf(1);
+
+        Mockito.when(RepositorioUsuario.encontrarUsuarioporId(codUsuario)).thenReturn(null);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.usuarioServicio.obtenerUsuario(codUsuario);
+                });
+
+        assertEquals("Usuario no encontrado.", exception.getMessage());
+    }
+
+    @Test
     public void actualizarUsuario() throws Exception {
         Long idUsuario = Long.valueOf(1);
-        Usuario paramUsuario = new Usuario("Javier", null, null, null, null, null, null);
+        Usuario paramUsuario = new Usuario("Javier", "prueba", "prueba", "prueba@correo.com", "11111111", "prueba", "prueba");
 
         Mockito.when(RepositorioUsuario.encontrarUsuarioporId(idUsuario)).thenReturn(this.usuario);
         Mockito.when(RepositorioUsuario.save(this.usuario)).thenReturn(this.usuario);
 
         Usuario result = this.usuarioServicio.actualizarUsuario(idUsuario, paramUsuario);
+
         assertNotNull(result);
         assertEquals(this.usuario, result);
         assertEquals(result.getNombre(), paramUsuario.getNombre());

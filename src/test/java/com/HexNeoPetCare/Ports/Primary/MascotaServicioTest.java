@@ -56,6 +56,44 @@ class MascotaServicioTest {
     }
 
     @Test
+    public void registrarMascotaConDatosNulosOInvalidos() throws Exception {
+        Long codUsuario = Long.valueOf(1);
+        Long idTipomascota = Long.valueOf(1);
+        Mascota mascotaDatosNulos = new Mascota();
+
+        Mockito.when(servicioUsuario.obtenerUsuario(codUsuario)).thenReturn(this.usuario);
+        Mockito.when(servicioTipoMascota.obtenerTipoMascotaPorId(idTipomascota)).thenReturn(this.tipoMascota);
+        Mockito.when(repositorioMascota.encontrarMascotaporNombreYUsuario(codUsuario, this.mascota.getNombre())).thenReturn(null);
+        Mockito.when(repositorioMascota.save(this.mascota)).thenReturn(this.mascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.mascotaServicio.registrarMascota(codUsuario, idTipomascota, mascotaDatosNulos);
+                });
+
+        assertEquals("No se completo todos los datos o son ivalidos.", exception.getMessage());
+    }
+
+    @Test
+    public void registrarMascotaConNombreRepetido() throws Exception {
+        Long codUsuario = Long.valueOf(1);
+        Long idTipomascota = Long.valueOf(1);
+        this.usuario.setIdUsuario(codUsuario);
+
+        Mockito.when(servicioUsuario.obtenerUsuario(codUsuario)).thenReturn(this.usuario);
+        Mockito.when(servicioTipoMascota.obtenerTipoMascotaPorId(idTipomascota)).thenReturn(this.tipoMascota);
+        Mockito.when(repositorioMascota.encontrarMascotaporNombreYUsuario(codUsuario, this.mascota.getNombre())).thenReturn(this.mascota);
+        Mockito.when(repositorioMascota.save(this.mascota)).thenReturn(this.mascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.mascotaServicio.registrarMascota(codUsuario, idTipomascota, this.mascota);
+                });
+
+        assertEquals("Una de sus mascotas ya tiene ese nombre.", exception.getMessage());
+    }
+
+    @Test
     void obtenerMascota() throws Exception {
         Long codMascota = Long.valueOf(1);
 
@@ -65,6 +103,20 @@ class MascotaServicioTest {
 
         assertNotNull(result);
         assertEquals(result, this.mascota);
+    }
+
+    @Test
+    public void NoEncontrarMascotaEnObtenerMascota() throws Exception {
+        Long codMascota = Long.valueOf(1);
+
+        Mockito.when(repositorioMascota.encontrarMascotaporId(codMascota)).thenReturn(null);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.mascotaServicio.obtenerMascota(codMascota);
+                });
+
+        assertEquals("Mascota no encontrada.", exception.getMessage());
     }
 
     @Test
@@ -88,6 +140,31 @@ class MascotaServicioTest {
         assertNotNull(result);
         assertEquals(result, this.mascota);
     }
+
+    @Test
+    public void actualizarMascotaConNombreRepetido() throws Exception {
+        Long codMascota = Long.valueOf(1);
+        Long idTipoMascota = Long.valueOf(1);
+        Long idUsuario = Long.valueOf(1);
+        this.usuario.setIdUsuario(idUsuario);
+        this.mascota.setUsuario(this.usuario);
+        Mascota paramMascota = new Mascota("Felipe", 8, 5.6, null, null);
+
+
+        Mockito.when(repositorioMascota.encontrarMascotaporId(codMascota)).thenReturn(this.mascota);
+        Mockito.when(servicioTipoMascota.obtenerTipoMascotaPorId(idTipoMascota)).thenReturn(this.tipoMascota);
+        Mockito.when(repositorioMascota.save(this.mascota)).thenReturn(this.mascota);
+        Mockito.when(repositorioMascota.encontrarMascotaporNombreYUsuario(idUsuario, paramMascota.getNombre()))
+                .thenReturn(new Mascota());
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.mascotaServicio.actualizarMascota(codMascota, null, paramMascota);
+                });
+
+        assertEquals("Una de sus mascotas ya tiene ese nombre.", exception.getMessage());
+    }
+
 
     @Test
     void eliminarMascota() throws Exception {

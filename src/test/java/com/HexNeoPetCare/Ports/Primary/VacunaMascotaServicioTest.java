@@ -65,6 +65,90 @@ public class VacunaMascotaServicioTest {
     }
 
     @Test
+    public void noRegistrarVacunaMascotaPorDatosNulos() throws Exception {
+        VacunaMascota paramVacunaMascota = new VacunaMascota();
+
+        Long idMascota = Long.valueOf(1);
+        Long idVacuna = Long.valueOf(1);
+        this.tipoMascota.setIdTipo(Long.valueOf(1));
+        this.mascota.setTipomascota(this.tipoMascota);
+        this.vacuna.setTipomascota(this.tipoMascota);
+
+        Mockito.when(repositorioMascota.encontrarMascotaporId(idMascota)).thenReturn(this.mascota);
+        Mockito.when(servicioVacuna.obtenerVacuna(idVacuna)).thenReturn(this.vacuna);
+        Mockito.when(repositorioVacunaMascota.save(this.vacunaMascota)).thenReturn(this.vacunaMascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.vacunaMascotaServicio.registrarVacunaMascota(idVacuna, idMascota, paramVacunaMascota);
+                });
+
+        assertEquals("No se llenaron todo los datos.", exception.getMessage());
+    }
+
+    @Test
+    public void noRegistrarVacunaMascotaPorMascotaNoEncontrada() throws Exception {
+        Long idMascota = Long.valueOf(1);
+        Long idVacuna = Long.valueOf(1);
+        this.tipoMascota.setIdTipo(Long.valueOf(1));
+        this.mascota.setTipomascota(this.tipoMascota);
+        this.vacuna.setTipomascota(this.tipoMascota);
+
+        Mockito.when(repositorioMascota.encontrarMascotaporId(idMascota)).thenReturn(null);
+        Mockito.when(servicioVacuna.obtenerVacuna(idVacuna)).thenReturn(this.vacuna);
+        Mockito.when(repositorioVacunaMascota.save(this.vacunaMascota)).thenReturn(this.vacunaMascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.vacunaMascotaServicio.registrarVacunaMascota(idVacuna, idMascota, this.vacunaMascota);
+                });
+
+        assertEquals("Mascota no encontrada.", exception.getMessage());
+    }
+
+    @Test
+    public void noRegistrarVacunaMascotaPorVacunaNoEncontrada() throws Exception {
+        Long idMascota = Long.valueOf(1);
+        Long idVacuna = Long.valueOf(1);
+        this.tipoMascota.setIdTipo(Long.valueOf(1));
+        this.mascota.setTipomascota(this.tipoMascota);
+        this.vacuna.setTipomascota(this.tipoMascota);
+
+        Mockito.when(repositorioMascota.encontrarMascotaporId(idMascota)).thenReturn(this.mascota);
+        Mockito.when(servicioVacuna.obtenerVacuna(idVacuna)).thenReturn(null);
+        Mockito.when(repositorioVacunaMascota.save(this.vacunaMascota)).thenReturn(this.vacunaMascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.vacunaMascotaServicio.registrarVacunaMascota(idVacuna, idMascota, this.vacunaMascota);
+                });
+
+        assertEquals("Vacuna no encontrada.", exception.getMessage());
+    }
+
+    @Test
+    public void noRegistrarVacunaMascotaPorDiferentesTipoMascota() throws Exception {
+        Long idMascota = Long.valueOf(1);
+        Long idVacuna = Long.valueOf(1);
+        this.tipoMascota.setIdTipo(Long.valueOf(1));
+        TipoMascota tipoMascota1 = new TipoMascota("Aves"); tipoMascota1.setIdTipo(Long.valueOf(1));
+        TipoMascota tipoMascota2 = new TipoMascota("Roedores"); tipoMascota2.setIdTipo(Long.valueOf(2));
+        this.mascota.setTipomascota(tipoMascota1);
+        this.vacuna.setTipomascota(tipoMascota2);
+
+        Mockito.when(repositorioMascota.encontrarMascotaporId(idMascota)).thenReturn(this.mascota);
+        Mockito.when(servicioVacuna.obtenerVacuna(idVacuna)).thenReturn(this.vacuna);
+        Mockito.when(repositorioVacunaMascota.save(this.vacunaMascota)).thenReturn(this.vacunaMascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.vacunaMascotaServicio.registrarVacunaMascota(idVacuna, idMascota, this.vacunaMascota);
+                });
+
+        assertEquals("El tipo de la vacuna y la mascota no son iguales", exception.getMessage());
+    }
+
+    @Test
     public void actualizarEstadoVacunaMascota() throws Exception {
         Long idVacunaMascota = Long.valueOf(1);
 
@@ -80,6 +164,22 @@ public class VacunaMascotaServicioTest {
     }
 
     @Test
+    public void estadoDeVacunaMascotaYaFueActualizada() {
+        Long idVacunaMascota = Long.valueOf(1);
+        this.vacunaMascota.setStatus(true);
+
+        Mockito.when(repositorioVacunaMascota.encontrarVacunaMascotaporId(idVacunaMascota)).thenReturn(this.vacunaMascota);
+        Mockito.when(repositorioVacunaMascota.save(this.vacunaMascota)).thenReturn(this.vacunaMascota);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.vacunaMascotaServicio.actualizarEstadoVacunaMascota(idVacunaMascota);
+                });
+
+        assertEquals("Ya fue actualizado el estado de la vacuna de la mascota.", exception.getMessage());
+    }
+
+    @Test
     public void eliminarVacunadeMascota() throws Exception {
         Long idVacunaMascota = Long.valueOf(1);
 
@@ -92,6 +192,23 @@ public class VacunaMascotaServicioTest {
         assertNotNull(result);
         assertEquals(idVacunaMascota, result);
     }
+
+    @Test
+    public void noEliminarVacunadeMascotaPorNoEcnontrarVacunaMascota() {
+        Long idVacunaMascota = Long.valueOf(1);
+
+        Mockito.when(repositorioVacunaMascota
+                .encontrarVacunaMascotaporId(idVacunaMascota))
+                .thenReturn(null);
+
+        Throwable exception = assertThrows(Exception.class,
+                () -> {
+                    this.vacunaMascotaServicio.eliminarVacunadeMascota(idVacunaMascota);
+                });
+
+        assertEquals("Vacuna de la mascota no encontrada.", exception.getMessage());
+    }
+
 
     @Test
     public void listarVacunasdeMascota() {

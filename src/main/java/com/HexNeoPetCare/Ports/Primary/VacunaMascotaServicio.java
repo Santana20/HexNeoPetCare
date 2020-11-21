@@ -34,6 +34,7 @@ public class VacunaMascotaServicio
 		Mascota m = repositorioMascota.encontrarMascotaporId(idMascota);
 		if ( m == null ) throw new Exception("Mascota no encontrada.");
 		Vacuna v = servicioVacuna.obtenerVacuna(idVacuna);
+		if ( v == null ) throw new Exception("Vacuna no encontrada.");
 		
 		if ( m.getTipomascota().getIdTipo() != v.getTipomascota().getIdTipo() )
 			throw new Exception("El tipo de la vacuna y la mascota no son iguales");
