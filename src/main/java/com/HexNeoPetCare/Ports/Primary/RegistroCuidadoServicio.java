@@ -81,7 +81,6 @@ public class RegistroCuidadoServicio
 
 		if (registroCuidado.getFechaRealizado() != null) r.setFechaRealizado(registroCuidado.getFechaRealizado());
 
-
 		return RepositorioRegistroCuidado.save(r);
 	}
 
