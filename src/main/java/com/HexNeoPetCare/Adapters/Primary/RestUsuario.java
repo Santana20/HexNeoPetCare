@@ -48,16 +48,13 @@ public class RestUsuario
         return u;
     }
 
+
     //ACTUALIZAR USUARIO
     @PutMapping("/actualizarUsuario/{idUsuario}")
-    public void actualizarUsuario(@PathVariable(value = "idUsuario") Long idUsuario, @RequestBody Usuario usuario)
-    {
-        try
-        {
+    public void actualizarUsuario(@PathVariable(value = "idUsuario") Long idUsuario, @RequestBody Usuario usuario) {
+        try {
             usuarioServicio.actualizarUsuario(idUsuario, usuario);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo actualizar al usuario " + idUsuario.toString());
         }
     }

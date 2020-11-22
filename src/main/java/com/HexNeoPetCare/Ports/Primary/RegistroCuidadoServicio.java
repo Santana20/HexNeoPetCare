@@ -3,6 +3,7 @@ package com.HexNeoPetCare.Ports.Primary;
 import java.util.Date;
 import java.util.List;
 
+import com.HexNeoPetCare.Domain.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +72,18 @@ public class RegistroCuidadoServicio
 	{
 		return RepositorioRegistroCuidado.listarCuidadoMascota(idMascota);
 	}
-	
+
+	//ACTUALIZAR REGISTRO CUIDADO
+
+	public RegistroCuidado actualizarRegistroCuidado(Long idRegistroCuidado, RegistroCuidado registroCuidado) throws Exception
+	{
+		RegistroCuidado r = obtenerRegistroCuidado(idRegistroCuidado);
+
+		if (registroCuidado.getFechaRealizado() != null) r.setFechaRealizado(registroCuidado.getFechaRealizado());
+
+
+		return RepositorioRegistroCuidado.save(r);
+	}
+
+
 }

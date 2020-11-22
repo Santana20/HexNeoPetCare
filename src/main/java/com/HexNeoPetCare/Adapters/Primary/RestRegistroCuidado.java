@@ -101,6 +101,19 @@ public class RestRegistroCuidado {
         }
         return IsRegCuidado;
 	}
-	
+
+	//Actualizar Registro de Cuidado
+	@PutMapping("/registroCuidado/actualizarRegistro/{idRegistroCuidado}")
+	public void actualizarUsuario(@PathVariable(value = "idRegistroCuidado") Long idRegistroCuidado, @RequestBody RegistroCuidado registroCuidado)
+	{
+		try
+		{
+			registroCuidadoServicio.actualizarRegistroCuidado(idRegistroCuidado, registroCuidado);
+		}
+		catch (Exception e)
+		{
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo actualizar al usuario " + idRegistroCuidado.toString());
+		}
+	}
 
 }
