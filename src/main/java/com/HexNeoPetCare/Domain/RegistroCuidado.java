@@ -47,7 +47,8 @@ public class RegistroCuidado
 		this.mascota = mascota;
 		this.cuidado = cuidado;
 	}
-	
+
+
 	public Mascota getMascota() {
 		return mascota;
 	}

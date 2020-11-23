@@ -1,5 +1,6 @@
 package com.HexNeoPetCare.Adapters.Primary;
 
+import com.HexNeoPetCare.Domain.RegistroCuidado;
 import com.HexNeoPetCare.Domain.Usuario;
 import com.HexNeoPetCare.Ports.Primary.UsuarioServicio;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,6 +17,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Date;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,6 +34,15 @@ public class RestUsuarioTest {
 
     @MockBean
     private UsuarioServicio usuarioServicio;
+
+    private final Usuario usuario = new Usuario("Sebastian",
+            "Contreras",
+            "Jr. Ayacucho 458",
+            "sebastian@prueba.com",
+            "999999999",
+            "sebastian",
+            "123456");
+
 
     @Test
     public void registrarUsuario() throws Exception {
@@ -106,6 +118,48 @@ public class RestUsuarioTest {
         this.mockMvc.perform(requestBuilder)
                 .andExpect(status().is(200));
     }
+
+    @Test
+    public void loginUsuario() throws Exception {
+        String correoUsuario = this.usuario.getCorreo();
+        String passwordUsuario = this.usuario.getPassword();
+
+        Mockito.when(usuarioServicio.validarUsuario(correoUsuario,passwordUsuario))
+                .thenReturn(true);
+        String uri = "/api/usuario/login" ;
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.mapToJson(this.usuario))
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        this.mockMvc.perform(requestBuilder)
+                .andExpect(status().is(200));
+    }
+
+
+    @Test
+    public void badLoginUsuario() throws Exception {
+        String correoUsuario = this.usuario.getCorreo();
+        String passwordUsuario = "1234566";
+
+        Mockito.when(usuarioServicio.validarUsuario(correoUsuario,passwordUsuario))
+                .thenReturn(false);
+        String uri = "/api/usuario/login" ;
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.mapToJson(this.usuario))
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        this.mockMvc.perform(requestBuilder)
+                .andExpect(status().is(404));
+    }
+
 
     private String mapToJson(Object object) throws JsonProcessingException {
         return this.objectMapper.writeValueAsString(object);

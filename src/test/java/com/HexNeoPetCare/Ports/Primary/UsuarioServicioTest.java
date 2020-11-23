@@ -1,5 +1,6 @@
 package com.HexNeoPetCare.Ports.Primary;
 
+import com.HexNeoPetCare.Domain.RegistroCuidado;
 import com.HexNeoPetCare.Domain.Usuario;
 import com.HexNeoPetCare.Ports.Secondary.UsuarioRepositorio;
 import org.junit.jupiter.api.Test;
@@ -104,4 +105,34 @@ public class UsuarioServicioTest {
         assertEquals(this.usuario, result);
         assertEquals(result.getNombre(), paramUsuario.getNombre());
     }
+
+    @Test
+    public void loginUsuario() throws Exception {
+        String correoUsuario = this.usuario.getCorreo();
+        String passwordUsuario = this.usuario.getPassword();
+
+        Mockito.when(RepositorioUsuario
+                .encontrarUsuarioporCorreo(correoUsuario))
+                .thenReturn(this.usuario);
+
+        Boolean result = this.usuarioServicio.validarUsuario(correoUsuario, passwordUsuario);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void badLoginUsuario() throws Exception {
+        String correoUsuario = this.usuario.getCorreo();
+        String passwordUsuario = "12312541";
+
+        Mockito.when(RepositorioUsuario
+                .encontrarUsuarioporCorreo(correoUsuario))
+                .thenReturn(this.usuario);
+
+        Boolean result = this.usuarioServicio.validarUsuario(correoUsuario, passwordUsuario);
+
+        assertFalse(result);
+    }
+
+
 }

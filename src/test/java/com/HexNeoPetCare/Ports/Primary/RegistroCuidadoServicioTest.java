@@ -3,6 +3,7 @@ package com.HexNeoPetCare.Ports.Primary;
 import com.HexNeoPetCare.Domain.Cuidado;
 import com.HexNeoPetCare.Domain.Mascota;
 import com.HexNeoPetCare.Domain.RegistroCuidado;
+import com.HexNeoPetCare.Domain.Usuario;
 import com.HexNeoPetCare.Ports.Secondary.CuidadoRepositorio;
 import com.HexNeoPetCare.Ports.Secondary.MascotaRepositorio;
 import com.HexNeoPetCare.Ports.Secondary.RegistroCuidadoRepositorio;
@@ -126,5 +127,27 @@ public class RegistroCuidadoServicioTest {
 
         assertNotNull(result);
         assertEquals(registroCuidadoList, result);
+    }
+
+    @Test
+    public void editarRegistroCuidado() throws Exception {
+        Long idRegistroCuidado = Long.valueOf(1);
+        Long idMascota = Long.valueOf(1);
+        @SuppressWarnings("deprecation")
+        Date fecha1 = new Date(2020, 11, 5, 16, 0, 0);
+
+        @SuppressWarnings("deprecation")
+        Date fecha2 = new Date(2020, 11, 8, 16, 0, 0);
+
+        RegistroCuidado paramRegistro = new RegistroCuidado( fecha1, fecha2, false, mascota, cuidado);
+
+        Mockito.when(RepositorioRegistroCuidado.encontrarRegistroCuidadoporId(idRegistroCuidado)).thenReturn(this.registroCuidado);
+        Mockito.when(RepositorioRegistroCuidado.save(this.registroCuidado)).thenReturn(this.registroCuidado);
+
+        RegistroCuidado result = this.registroCuidadoServicio.actualizarRegistroCuidado(idRegistroCuidado, paramRegistro);
+
+        assertNotNull(result);
+        assertEquals(this.registroCuidado, result);
+        assertEquals(result.getFechaRealizado(), paramRegistro.getFechaRealizado());
     }
 }
